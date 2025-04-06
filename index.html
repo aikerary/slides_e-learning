@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0, user-scalable=yes">
+    <title>Presentación: Educación en Ambientes Virtuales</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css" id="theme-base">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/dark-theme.css">
+    <link rel="stylesheet" href="styles/icon-fix.css">
+    <link rel="stylesheet" href="styles/theme-toggle.css">
+    <link rel="stylesheet" href="styles/language-toggle.css">
+    <link rel="stylesheet" href="styles/language-loading.css">
+    <link rel="stylesheet" href="styles/index-slide.css">
+    <link rel="stylesheet" href="styles/index-navigation.css">
+    <link rel="stylesheet" href="styles/lms-gallery.css">
+    
+    <!-- Emergency styling for language toggle -->
+    <style>
+        #language-toggle-btn {
+            cursor: pointer !important;
+            user-select: none !important;
+        }
+        
+        /* Make toggle more noticeable */
+        #language-toggle-btn:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 0 8px rgba(0, 119, 204, 0.6) !important;
+        }
+        
+        #language-toggle-btn:active {
+            transform: scale(0.95) !important;
+        }
+        
+        /* Ensure proper loading state appearance */
+        body.language-loading #language-loading-indicator {
+            display: block !important;
+            opacity: 1 !important;
+        }
+        
+        /* Ensure language toggle stays visible during loading */
+        body.language-loading #language-toggle-btn,
+        body.language-loading .theme-toggle-wrapper {
+            z-index: 10001 !important;
+        }
+        
+        /* Prevent any content flashing during loading */
+        .reveal .slides {
+            transition: opacity 0.1s ease-out;
+        }
+        
+        body.language-loading .reveal .slides {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+    </style>
+    
+    <!-- Add additional emergency script -->
+    <script>
+        // Emergency check for back-to-index buttons
+        window.backToIndexEmergencyCheck = function() {
+            console.log("Running emergency check for index buttons");
+            const slides = document.querySelectorAll('.reveal .slides > section:not(.title-slide):not(.index-slide)');
+            const currentLang = document.documentElement.lang || 'es';
+            const buttonTitle = currentLang === 'en' ? 'Back to index' : 'Volver al índice';
+            
+            slides.forEach(slide => {
+                if (!slide.querySelector('.back-to-index')) {
+                    const backButton = document.createElement('div');
+                    backButton.className = 'back-to-index';
+                    backButton.innerHTML = '<i class="fas fa-list"></i>';
+                    backButton.title = buttonTitle;
+                    backButton.style.cssText = 'position:absolute !important; top:10px !important; left:10px !important; z-index:10000 !important; cursor:pointer !important; font-size:1.2rem; color:var(--primary-color,#0077cc); opacity:0.7; transition:all 0.3s ease; padding:5px; border-radius:3px; background-color:rgba(255,255,255,0.2);';
+                    backButton.onclick = function(e) {
+                        e.stopPropagation();
+                        Reveal.slide(1);
+                    };
+                    slide.insertBefore(backButton, slide.firstChild);
+                }
+            });
+        };
+        
+        // Set up periodic checks
+        window.addEventListener('load', function() {
+            // Initial checks
+            setTimeout(window.backToIndexEmergencyCheck, 1000);
+            setTimeout(window.backToIndexEmergencyCheck, 3000);
+            
+            // Periodic check
+            setInterval(window.backToIndexEmergencyCheck, 5000);
+        });
+    </script>
+    
+    <!-- Core functionality scripts -->
+    <script src="js/date-formatter.js"></script>
+    <script src="js/language-toggle.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/presentation.js"></script>
+    <script src="js/index-navigation.js"></script>
+    <script src="js/lms-interactions.js"></script>
+</head>
+<body>
+    <!-- Theme Toggle Switch -->
+    <div class="theme-toggle-wrapper">
+        <i class="fas fa-sun theme-icon sun-icon" aria-hidden="true"></i>
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+        <i class="fas fa-moon theme-icon moon-icon" aria-hidden="true"></i>
+    </div>
+
+    <!-- Language Toggle Button - improved structure with direct onclick handler -->
+    <div id="language-toggle-btn" class="language-toggle-wrapper" tabindex="0" role="button" 
+         aria-label="Change language" onclick="if(typeof handleLanguageToggle==='function')handleLanguageToggle()">
+        <i class="fas fa-language language-icon" aria-hidden="true"></i>
+        <span class="language-text">ES</span>
+    </div>
+
+    <div class="reveal">
+        <div class="slides" id="presentation-slides">
+            <!-- Slides will be loaded dynamically -->
+            <section class="loading-section">
+                <h2>Cargando presentación...</h2>
+                <div class="loader"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Additional noscript warning for JavaScript disabled browsers -->
+    <noscript>
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; color: black; z-index: 9999; padding: 2rem; text-align: center; font-family: sans-serif;">
+            <h2>JavaScript es necesario</h2>
+            <p>Esta presentación requiere JavaScript para funcionar. Por favor, habilite JavaScript en su navegador.</p>
+            <hr>
+            <h2>JavaScript is required</h2>
+            <p>This presentation requires JavaScript to function. Please enable JavaScript in your browser.</p>
+        </div>
+    </noscript>
+
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/zoom/zoom.js"></script>
+
+    <!-- Core functionality scripts -->
+    <script src="js/date-formatter.js"></script>
+    <script src="js/language-toggle.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/presentation.js"></script>
+    <script src="js/index-navigation.js"></script>
+    
+    <!-- Emergency script to ensure language toggle works -->
+    <script>
+        // Wait for everything to load
+        window.addEventListener('load', function() {
+            // Verify toggle is initialized
+            setTimeout(function() {
+                const toggleBtn = document.getElementById('language-toggle-btn');
+                if (toggleBtn && !toggleBtn.hasAttribute('data-language-toggle-initialized')) {
+                    console.warn('Language toggle initialization failed in normal flow, applying fallback');
+                    
+                    // Define global fallback if it doesn't exist
+                    if (typeof window.handleLanguageToggle !== 'function') {
+                        window.handleLanguageToggle = function() {
+                            console.log('Using emergency language toggle handler');
+                            
+                            // Get current language and switch
+                            const currentLang = localStorage.getItem('presentationLanguage') || 'es';
+                            const newLang = currentLang === 'es' ? 'en' : 'es';
+                            
+                            // Store preference
+                            localStorage.setItem('presentationLanguage', newLang);
+                            
+                            // Update UI
+                            const textElement = toggleBtn.querySelector('.language-text');
+                            if (textElement) {
+                                textElement.textContent = newLang.toUpperCase();
+                            }
+                            
+                            // Reload page - simplest solution
+                            location.reload();
+                        };
+                    }
+                    
+                    // Apply handler directly
+                    toggleBtn.onclick = function() {
+                        window.handleLanguageToggle();
+                        return false;
+                    };
+                    
+                    toggleBtn.setAttribute('data-language-toggle-initialized', 'true');
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

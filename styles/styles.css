@@ -1,0 +1,342 @@
+/* Custom styles for the presentation with responsive REM units */
+
+:root {
+    --primary-color: #0077cc;
+    --secondary-color: #005599;
+    --accent-color: #ff6633;
+    --text-color: #333333;
+    --background-color: #ffffff;
+    --icon-color: #0077cc;
+    
+    /* Base font size adjustments for different screen sizes - INCREASED */
+    font-size: 20px; /* Default base font size increased from 16px */
+}
+
+/* Responsive base font size adjustments - INCREASED */
+@media (max-width: 1200px) {
+    :root {
+        font-size: 18px; /* Increased from 15px */
+    }
+}
+
+@media (max-width: 900px) {
+    :root {
+        font-size: 17px; /* Increased from 14px */
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        font-size: 16px; /* Increased from 13px */
+    }
+}
+
+@media (max-width: 400px) {
+    :root {
+        font-size: 15px; /* Increased from 12px */
+    }
+}
+
+.reveal {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    font-size: 1.1rem; /* Increased from 1rem */
+    line-height: 1.5;
+}
+
+.reveal h1, 
+.reveal h2, 
+.reveal h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    letter-spacing: -0.02rem;
+    text-transform: none;
+}
+
+.reveal h1 {
+    font-size: 2.6rem; /* Increased from 2.5rem */
+}
+
+.reveal h2 {
+    font-size: 2rem; /* Increased from 1.8rem */
+    padding-left: 0; /* Remove any leftward padding */
+    padding-right: 3.5rem; /* Reserve space for icon */
+    max-width: calc(100% - 4.5rem); /* Ensure text doesn't extend too far */
+}
+
+.reveal ul {
+    list-style-type: none; /* Remove default bullets for custom styling */
+    margin-left: 0.5rem;
+    padding-left: 0;
+}
+
+.reveal li {
+    margin-bottom: 0.6rem; /* Slightly increased from 0.5rem */
+    line-height: 1.5;
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 1.1rem; /* Increased from 1rem */
+}
+
+/* Custom bullet points */
+.reveal li:before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+}
+
+.reveal li.level-1 {
+    margin-left: 1.5rem;
+    font-size: 1.05rem; /* Increased from 0.95rem */
+}
+
+.reveal li.level-1:before {
+    content: "◦";
+}
+
+.reveal li.level-2 {
+    margin-left: 3rem;
+    font-size: 1rem; /* Increased from 0.9rem */
+}
+
+.reveal li.level-2:before {
+    content: "▪";
+    font-size: 0.9rem;
+}
+
+/* Title slide styling */
+.title-slide h1 {
+    font-size: 3rem; /* Increased from 2.8rem */
+    margin-bottom: 1rem;
+    padding-right: 0;
+    max-width: 100%;
+}
+
+.title-slide p {
+    font-size: 1.5rem; /* Increased from 1.4rem */
+    margin: 0.3rem 0;
+}
+
+/* Source references */
+.source-reference {
+    font-size: 0.9rem; /* Increased from 0.8rem */
+    font-style: italic;
+    color: #666;
+    margin-top: 1rem;
+    text-align: right;
+    max-width: 100%;
+    padding-right: 0;
+}
+
+/* Icon styling - REPOSITIONED TO TOP RIGHT */
+.slide-icon {
+    font-size: 2.5rem;
+    color: var(--icon-color);
+    opacity: 0.7;
+    /* Position in top right corner */
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    /* Add subtle shadow for better visibility against any background */
+    text-shadow: 0 0 0.1rem rgba(255, 255, 255, 0.8);
+}
+
+/* Hover effect */
+.slide-icon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Remove bottom positioning that was previously used */
+.slide-icon {
+    bottom: auto;
+}
+
+/* Fix for title slide icon */
+.title-slide .slide-icon {
+    font-size: 5rem;
+    /* Center the icon on title slide */
+    position: static;
+    display: block;
+    text-align: center;
+    margin: 0.8rem auto 1.5rem auto;
+    opacity: 0.9;
+}
+
+/* Special styling for slides with icons */
+.with-icon ul {
+    padding-right: 0; /* Remove side padding since icons are now at top */
+}
+
+/* Content wrapping and overflow handling with responsive height */
+.reveal .slides section {
+    /* Remove any borders, backgrounds, or shadows */
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    /* Keep the auto overflow handling */
+    overflow-y: auto !important;
+    max-height: 85vh;
+    
+    /* Add vertical centering manually */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+/* For slides with excessive content that won't fit */
+.reveal .slides section.content-overflow {
+    justify-content: flex-start !important;
+    padding-top: 1.5rem;
+}
+
+/* Improve text fitting by reducing some spacing */
+.reveal ul, .reveal ol {
+    margin: 0 0 0.6rem 0;
+}
+
+/* Loading animation */
+.loading-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.loading-section h2 {
+    font-size: 2.2rem; /* Increased size */
+}
+
+.loader {
+    border: 0.3125rem solid #f3f3f3;
+    border-top: 0.3125rem solid var(--primary-color);
+    border-radius: 50%;
+    width: 3.5rem; /* Increased from 3.125rem */
+    height: 3.5rem; /* Increased from 3.125rem */
+    animation: spin 2s linear infinite;
+    margin-top: 1.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Navigation controls */
+.reveal .controls {
+    color: var(--primary-color);
+}
+
+/* Progress bar */
+.reveal .progress {
+    color: var(--accent-color);
+    height: 0.35rem; /* Slightly increased from 0.3125rem */
+}
+
+/* Additional responsive adjustments */
+@media (max-height: 600px) {
+    .reveal h1 {
+        font-size: 2.4rem;
+    }
+    
+    .reveal h2 {
+        font-size: 1.8rem;
+    }
+    
+    .title-slide h1 {
+        font-size: 2.6rem;
+    }
+    
+    .slide-icon {
+        font-size: 2.2rem;
+    }
+    
+    .title-slide .slide-icon {
+        font-size: 3.5rem; /* Increased from 3.2rem */
+    }
+}
+
+/* Additional responsive adjustments for icons */
+@media (max-width: 768px) {
+    .slide-icon {
+        font-size: 2.2rem;
+        top: 0.8rem;
+        right: 0.8rem;
+    }
+    
+    .reveal h2 {
+        padding-right: 3rem;
+        max-width: calc(100% - 3.5rem);
+    }
+}
+
+/* Ensure content is readable on very small devices */
+@media (max-width: 480px) {
+    .reveal .slides {
+        padding: 0.5rem;
+    }
+    
+    .reveal li {
+        padding-left: 1rem;
+    }
+    
+    .slide-icon {
+        font-size: 1.8rem;
+        top: 0.6rem;
+        right: 0.6rem;
+    }
+    
+    .title-slide .slide-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .reveal h2 {
+        padding-right: 2.5rem;
+        max-width: calc(100% - 3rem);
+    }
+}
+
+/* Print mode adjustments */
+@media print {
+    .reveal .slides section {
+        max-height: none !important;
+        height: auto !important;
+    }
+    
+    .reveal {
+        font-size: 1rem; /* Increased from 0.95rem */
+    }
+}
+
+/* Bold text for emphasis */
+.reveal strong {
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+/* Add elegant link styling */
+.reveal a {
+    color: var(--primary-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.reveal a:hover {
+    border-bottom-color: var(--primary-color);
+}
+
+/* Fix vertical alignment of content within slides */
+.reveal .slides section > * {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}

@@ -1,0 +1,127 @@
+/**
+ * Estilos para la galería de sistemas LMS
+ */
+
+/* Contenedor de ejemplos LMS */
+.lms-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Cada item LMS con su imagen y texto */
+.lms-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer; /* Indicar que es clickable */
+    text-decoration: none; /* Eliminar subrayado de enlaces */
+    color: inherit; /* Mantener el color de texto original */
+}
+
+.lms-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 119, 204, 0.05);
+}
+
+/* Añadir un sutil botón de "Visitar" que aparece en hover */
+.lms-item::after {
+    content: "Visitar sitio →";
+    display: block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: var(--primary-color, #0077cc);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lms-item:hover::after {
+    opacity: 1;
+}
+
+/* Ajustar texto para idioma inglés */
+html[lang="en"] .lms-item::after {
+    content: "Visit site →";
+}
+
+/* Focus styles para accesibilidad */
+.lms-item:focus {
+    outline: 2px solid var(--primary-color, #0077cc);
+    outline-offset: 2px;
+}
+
+/* Estilo para cuando está activo (siendo clickeado) */
+.lms-item:active {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de imagen con tamaño fijo */
+.lms-image-container {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* Imagen del LMS */
+.lms-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Nombre del LMS */
+.lms-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--primary-color, #0077cc);
+}
+
+/* Descripción del LMS */
+.lms-description {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Ajustes para tema oscuro */
+body.dark-theme .lms-item {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .lms-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive para pantallas medianas */
+@media (max-width: 1200px) {
+    .lms-gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 700px) {
+    .lms-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .lms-image-container {
+        width: 120px;
+        height: 120px;
+    }
+}

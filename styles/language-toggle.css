@@ -1,0 +1,173 @@
+/* Language Toggle Styles */
+
+.language-toggle-wrapper {
+    position: fixed;
+    top: 15px;
+    left: 15px;  /* Changed from right to left */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-bg-color, rgba(255, 255, 255, 0.8));
+    border-radius: 30px;
+    padding: 8px 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    user-select: none;
+}
+
+.language-toggle-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: var(--card-bg-color-hover, rgba(255, 255, 255, 0.95));
+}
+
+.language-toggle-wrapper:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.language-icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+    color: var(--primary-color, #0077cc);
+}
+
+.language-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color, #333);
+    text-transform: uppercase;
+}
+
+/* Loading state - enhanced to fill entire screen */
+#language-loading-indicator {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Darker overlay */
+    z-index: 10000; /* Increased z-index */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loading-overlay {
+    background-color: var(--card-bg-color, white);
+    padding: 40px; /* Larger padding */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+    max-width: 90%;
+    width: 400px; /* Fixed width for consistency */
+}
+
+.loading-spinner {
+    border: 6px solid #f3f3f3; /* Slightly larger spinner */
+    border-top: 6px solid var(--primary-color, #0077cc);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Accessibility improvements */
+.language-toggle-wrapper:focus {
+    outline: 2px solid var(--primary-color, #0077cc);
+    outline-offset: 2px;
+}
+
+.language-toggle-wrapper:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Dark theme adjustments */
+body.dark-theme .language-toggle-wrapper {
+    background-color: rgba(40, 40, 40, 0.8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-theme .language-toggle-wrapper:hover {
+    background-color: rgba(50, 50, 50, 0.95);
+}
+
+body.dark-theme .language-text {
+    color: var(--dark-text-color, #eaeaea);
+}
+
+body.dark-theme .loading-overlay {
+    background-color: #333;
+    color: #eaeaea;
+}
+
+body.dark-theme .loading-spinner {
+    border-color: #444;
+    border-top-color: var(--primary-color, #3a76d8);
+}
+
+/* Responsive adjustments - adjusted for left positioning */
+@media (max-width: 768px) {
+    .language-toggle-wrapper {
+        top: 10px;
+        left: 10px;
+        padding: 6px 12px;
+    }
+    
+    .language-icon {
+        font-size: 1rem;
+        margin-right: 5px;
+    }
+    
+    .language-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .language-toggle-wrapper {
+        top: 10px;
+        left: 10px;
+        padding: 5px 10px;
+    }
+    
+    /* Full-width loading screen on mobile */
+    .loading-overlay {
+        width: 85%;
+        padding: 30px;
+    }
+}
+
+/* Combined layout with theme toggle */
+@media (max-width: 480px) {
+    .theme-toggle-wrapper {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .language-toggle-wrapper {
+        top: 10px;
+        left: 10px;
+    }
+}
+
+/* Special state for language loading */
+body.language-loading #language-loading-indicator {
+    display: flex !important;
+    opacity: 1 !important;
+}
+
+body.language-loading-active .reveal .slides {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}

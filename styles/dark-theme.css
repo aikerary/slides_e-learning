@@ -1,0 +1,103 @@
+/**
+ * Dark theme for the presentation
+ */
+
+body.dark-theme {
+    background-color: #121212;
+}
+
+body.dark-theme .reveal {
+    color: #f0f0f0;
+}
+
+body.dark-theme :root {
+    --primary-color: #4da6ff;
+    --secondary-color: #66b3ff;
+    --accent-color: #ff8c5a;
+    --text-color: #f0f0f0;
+    --background-color: #121212;
+    --icon-color: #4da6ff;
+}
+
+/* Headings in dark mode */
+body.dark-theme .reveal h1,
+body.dark-theme .reveal h2,
+body.dark-theme .reveal h3 {
+    color: var(--primary-color);
+}
+
+/* List items and bullets */
+body.dark-theme .reveal li:before {
+    color: var(--primary-color);
+}
+
+/* Source references in dark mode */
+body.dark-theme .source-reference {
+    color: #aaa;
+}
+
+/* Icons in dark mode */
+body.dark-theme .slide-icon {
+    color: var(--primary-color) !important;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Progress bar */
+body.dark-theme .reveal .progress {
+    color: var(--accent-color);
+}
+
+/* Controls */
+body.dark-theme .reveal .controls {
+    color: var(--primary-color);
+}
+
+/* Bold text */
+body.dark-theme .reveal strong {
+    color: var(--accent-color);
+}
+
+/* Links */
+body.dark-theme .reveal a {
+    color: var(--primary-color);
+}
+
+body.dark-theme .reveal a:hover {
+    color: var(--accent-color);
+}
+
+/* Clean slide appearance - NO backgrounds, borders or shadows */
+body.dark-theme .reveal .slides section {
+    /* Remove any borders, backgrounds, or shadows */
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* Code blocks in dark mode */
+body.dark-theme .reveal pre,
+body.dark-theme .reveal code {
+    background-color: #2d2d2d;
+    color: #f0f0f0;
+}
+
+/* Loading animation in dark mode */
+body.dark-theme .loader {
+    border-color: #333;
+    border-top-color: var(--primary-color);
+}
+
+/* Theme switch in dark mode */
+body.dark-theme .theme-switch .slider {
+    background-color: #4da6ff;
+}
+
+body.dark-theme .theme-switch .slider:before {
+    background-color: #1e1e1e;
+}
+
+/* Slide numbers */
+body.dark-theme .reveal .slide-number {
+    color: #aaa;
+}

@@ -1,0 +1,200 @@
+[
+    {
+        "titulo": "Aspectos Claves de la Educación en Ambientes Virtuales",
+        "puntos": ["Aiker Acosta", "Curso: E-learning", "Fecha: Actual"],
+        "icon": "fa-graduation-cap",
+        "en": {
+            "titulo": "Key Aspects of Education in Virtual Environments",
+            "puntos": ["Aiker Acosta", "Course: E-learning", "Date: Current"]
+        }
+    },
+    {
+        "titulo": "Índice",
+        "puntos": [
+            "Introducción",
+            "Implicaciones de la enseñanza y aprendizaje en línea",
+            "Consideraciones para el diseño de cursos virtuales",
+            "Ejemplos de plataformas LMS",
+            "Diseño pedagógico: componentes clave",
+            "Conclusiones",
+            "Referencias"
+        ],
+        "icon": "fa-list",
+        "type": "index",
+        "en": {
+            "titulo": "Index",
+            "puntos": [
+                "Introduction",
+                "Implications of online teaching and learning",
+                "Considerations for virtual course design",
+                "Examples of LMS platforms",
+                "Pedagogical design: key components",
+                "Conclusions",
+                "References"
+            ]
+        }
+    },
+    {
+        "titulo": "Introducción",
+        "puntos": [
+            "Importancia creciente de la educación virtual.",
+            "Objetivo: Explorar implicaciones, consideraciones de diseño y componentes pedagógicos del e-learning."
+        ],
+        "icon": "fa-book-open",
+        "en": {
+            "titulo": "Introduction",
+            "puntos": [
+                "Growing importance of virtual education.",
+                "Objective: Explore implications, design considerations, and pedagogical components of e-learning."
+            ]
+        }
+    },
+    {
+        "titulo": "¿Qué implica la enseñanza y el aprendizaje en línea?",
+        "puntos": [
+            "Nuevo Paradigma: Repensar la pedagogía, no solo trasladar contenido.",
+            "Roles Cambiantes:",
+            "  - Docente: Facilitador, guía, diseñador, curador, moderador.",
+            "  - Estudiante: Protagonista, autónomo, constructor de conocimiento.",
+            "Comunicación Mediada: Herramientas sincrónicas y asincrónicas.",
+            "Flexibilidad: Supera barreras de tiempo/espacio; exige organización.",
+            "Entorno Virtual: Plataforma digital (LMS) como aula.",
+            "(Fuente: Estrategias..., págs. 13-ss)"
+        ],
+        "icon": "fa-chalkboard-teacher",
+        "en": {
+            "titulo": "What does online teaching and learning involve?",
+            "puntos": [
+                "New Paradigm: Rethinking pedagogy, not just transferring content.",
+                "Changing Roles:",
+                "  - Teacher: Facilitator, guide, designer, curator, moderator.",
+                "  - Student: Protagonist, autonomous, knowledge builder.",
+                "Mediated Communication: Synchronous and asynchronous tools.",
+                "Flexibility: Overcomes time/space barriers; requires organization.",
+                "Virtual Environment: Digital platform (LMS) as classroom.",
+                "(Source: Strategies..., pp. 13-ss)"
+            ]
+        }
+    },
+    {
+        "titulo": "Consideraciones preliminares para el diseño de un curso virtual",
+        "puntos": [
+            "Análisis del Contexto y Audiencia: Estudiantes (conocimientos, tech, motivación), Institución.",
+            "Definición de Objetivos de Aprendizaje: Claros y medibles desde el inicio.",
+            "Selección de Plataforma y Herramientas: LMS adecuado, tecnologías.",
+            "Diseño de Estructura y Navegación: Lógica, intuitiva, cronograma claro.",
+            "Modelo de Comunicación e Interacción: Balance sincrónico/asincrónico, normas.",
+            "Recursos y Materiales: Crear/adaptar/curar; diversidad de formatos.",
+            "Soporte Técnico y Pedagógico: Planificar apoyo a estudiantes.",
+            "(Fuente: Estrategias..., sección 'Consideraciones preliminares...')"
+        ],
+        "icon": "fa-tasks",
+        "en": {
+            "titulo": "Preliminary considerations for virtual course design",
+            "puntos": [
+                "Context and Audience Analysis: Students (knowledge, tech, motivation), Institution.",
+                "Learning Objectives Definition: Clear and measurable from the start.",
+                "Platform and Tools Selection: Suitable LMS, technologies.",
+                "Structure and Navigation Design: Logical, intuitive, clear schedule.",
+                "Communication and Interaction Model: Synchronous/asynchronous balance, norms.",
+                "Resources and Materials: Create/adapt/curate; format diversity.",
+                "Technical and Pedagogical Support: Plan student assistance.",
+                "(Source: Strategies..., section 'Preliminary considerations...')"
+            ]
+        }
+    },
+    {
+        "titulo": "Ejemplos de plataformas LMS populares",
+        "puntos": [
+            "Moodle: Plataforma de código abierto, altamente personalizable, usada en miles de instituciones.",
+            "Canvas: Interfaz moderna e intuitiva, diseño enfocado en mobile, herramientas de colaboración.",
+            "Blackboard Learn: Amplia gama de funcionalidades, orientado a instituciones grandes.",
+            "Google Classroom: Simple, integración con G Suite, ideal para iniciarse en e-learning.",
+            "Microsoft Teams for Education: Integra comunicación, colaboración y gestión de contenidos."
+        ],
+        "icon": "fa-desktop",
+        "images": [
+            "images/lms/moodle.png",
+            "images/lms/canvas.png",
+            "images/lms/blackboard.png",
+            "images/lms/classroom.png",
+            "images/lms/teams.png"
+        ],
+        "links": [
+            "https://moodle.org/",
+            "https://www.instructure.com/canvas/",
+            "https://www.blackboard.com/teaching-learning/learning-management/blackboard-learn",
+            "https://edu.google.com/intl/ALL_es/products/classroom/",
+            "https://www.microsoft.com/en-us/education/products/teams"
+        ],
+        "en": {
+            "titulo": "Examples of popular LMS platforms",
+            "puntos": [
+                "Moodle: Open-source platform, highly customizable, used by thousands of institutions.",
+                "Canvas: Modern and intuitive interface, mobile-focused design, collaboration tools.",
+                "Blackboard Learn: Wide range of functionalities, oriented to large institutions.",
+                "Google Classroom: Simple, G Suite integration, ideal for getting started with e-learning.",
+                "Microsoft Teams for Education: Integrates communication, collaboration, and content management."
+            ]
+        }
+    },
+    {
+        "titulo": "Diseño pedagógico de un curso: Consideraciones y Componentes",
+        "puntos": [
+            "Enfoque Centrado en el Estudiante: Considerar conocimientos previos, intereses.",
+            "Componentes Clave:",
+            "  1. Objetivos de Aprendizaje: Claros, medibles, con verbos de acción.",
+            "  2. Contenidos: Relevantes, organizados, diversos formatos.",
+            "  3. Actividades: Alineadas a objetivos, fomentan interacción.",
+            "  4. Evaluación: Alineada, formativa y sumativa, mide objetivos.",
+            "  5. Interacción y Colaboración: Fomentar comunicación.",
+            "  6. Retroalimentación: Oportuna y constructiva.",
+            "(Fuente: Módulo 2 - 25.pdf)"
+        ],
+        "icon": "fa-project-diagram",
+        "en": {
+            "titulo": "Pedagogical course design: Considerations and Components",
+            "puntos": [
+                "Student-Centered Approach: Consider prior knowledge, interests.",
+                "Key Components:",
+                "  1. Learning Objectives: Clear, measurable, with action verbs.",
+                "  2. Content: Relevant, organized, diverse formats.",
+                "  3. Activities: Aligned with objectives, promote interaction.",
+                "  4. Assessment: Aligned, formative and summative, measures objectives.",
+                "  5. Interaction and Collaboration: Encourage communication.",
+                "  6. Feedback: Timely and constructive.",
+                "(Source: Module 2 - 25.pdf)"
+            ]
+        }
+    },
+    {
+        "titulo": "Conclusiones",
+        "puntos": [
+            "Recapitulación: Cambio de roles, diseño intencional, interacción, evaluación formativa.",
+            "La efectividad del e-learning depende de un diseño pedagógico sólido centrado en el estudiante."
+        ],
+        "icon": "fa-check-circle",
+        "en": {
+            "titulo": "Conclusions",
+            "puntos": [
+                "Recap: Role changes, intentional design, interaction, formative assessment.",
+                "E-learning effectiveness depends on solid student-centered pedagogical design."
+            ]
+        }
+    },
+    {
+        "titulo": "Referencias",
+        "puntos": [
+            "Salgado García, E. (2005). Estrategias de enseñanza virtual universitaria. Editorial ULACIT. (Págs. 13-23).",
+            "Vieira, C. (s.f.). Diseño Pedagógico de Cursos (Documento Módulo 2 - '25.pdf')."
+        ],
+        "icon": "fa-book",
+        "en": {
+            "titulo": "References",
+            "puntos": [
+                "Salgado García, E. (2005). Estrategias de enseñanza virtual universitaria. Editorial ULACIT. (pp. 13-23).",
+                "Vieira, C. (n.d.). Diseño Pedagógico de Cursos (Document Module 2 - '25.pdf')."
+            ]
+        }
+    }
+]
