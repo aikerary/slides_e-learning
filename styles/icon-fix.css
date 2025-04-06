@@ -1,13 +1,15 @@
-/* Fix for slide icons positioning - ensures content icons are in top right */
+/* Improved fix for slide icons positioning - prevent overlap with titles */
 
-/* Main slide icon (not back-to-index) should be in the top right */
+/* Main slide icon (not back-to-index) should be in the top right corner */
 .reveal .slides section:not(.title-slide) .slide-icon {
     position: absolute !important;
-    top: 10px !important;
+    top: 5px !important; /* Moved higher up */
     right: 10px !important;
     left: auto !important;
     bottom: auto !important;
     z-index: 100 !important;
+    font-size: 2rem !important; /* Slightly smaller */
+    opacity: 0.6 !important; /* More subtle */
 }
 
 /* Title slide icon exception - centered */
@@ -16,12 +18,21 @@
     display: block !important;
     text-align: center !important;
     margin: 0.8rem auto 1.5rem auto !important;
+    font-size: 5rem !important; /* Maintain large size for title slide */
+    opacity: 0.9 !important;
+}
+
+/* Add space above the title to prevent overlap with icons */
+.reveal .slides section:not(.title-slide) h2 {
+    margin-top: 2.5rem !important; /* Add space above title */
+    padding-right: 2.5rem !important; /* Keep space to the right for the icon */
+    max-width: calc(100% - 3rem) !important; /* Ensure text doesn't overlap */
 }
 
 /* Back-to-index icon should be in the top left and ALWAYS blue */
 .back-to-index {
     position: absolute !important;
-    top: 10px !important;
+    top: 5px !important; /* Moved higher to match slide icon */
     left: 10px !important;
     right: auto !important;
     bottom: auto !important;
@@ -47,4 +58,16 @@
 .dark-theme .back-to-index,
 .dark-theme .back-to-index i {
     color: #0099ff !important; /* Slightly brighter blue for dark theme */
+}
+
+/* Properly position icons for smaller screens */
+@media (max-width: 768px) {
+    .reveal .slides section:not(.title-slide) h2 {
+        margin-top: 2rem !important;
+        font-size: 1.8rem !important;
+    }
+    
+    .reveal .slides section:not(.title-slide) .slide-icon {
+        font-size: 1.6rem !important;
+    }
 }

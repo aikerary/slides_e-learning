@@ -61,8 +61,10 @@
 .reveal h2 {
     font-size: 2rem; /* Increased from 1.8rem */
     padding-left: 0; /* Remove any leftward padding */
-    padding-right: 3.5rem; /* Reserve space for icon */
-    max-width: calc(100% - 4.5rem); /* Ensure text doesn't extend too far */
+    padding-right: 2.5rem; /* Reduced from 3.5rem to avoid icon overlap */
+    max-width: calc(100% - 3rem); /* Ensure text doesn't extend too far */
+    margin-top: 2.5rem; /* Add space at top to prevent overlap with icons */
+    margin-bottom: 1rem; /* Space below heading */
 }
 
 .reveal ul {
@@ -130,15 +132,15 @@
     padding-right: 0;
 }
 
-/* Icon styling - REPOSITIONED TO TOP RIGHT */
+/* Icon styling - REPOSITIONED HIGHER */
 .slide-icon {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Slightly smaller from 2.5rem */
     color: var(--icon-color);
-    opacity: 0.7;
+    opacity: 0.6; /* More subtle */
     /* Position in top right corner */
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 5px; /* Moved up from 1rem */
+    right: 10px;
     z-index: 10;
     /* Add subtle shadow for better visibility against any background */
     text-shadow: 0 0 0.1rem rgba(255, 255, 255, 0.8);

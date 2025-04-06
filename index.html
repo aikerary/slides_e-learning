@@ -186,6 +186,35 @@
         }
     </style>
     
+    <!-- Emergency styling to prevent icon/title overlap -->
+    <!-- Emergency styling for title and icon positioning -->
+    <style>
+        /* Prevent icons from overlapping titles by adjusting positions */
+        .reveal .slides section:not(.title-slide) h2 {
+            margin-top: 2.5rem !important; /* Add space above title */
+            padding-right: 2.5rem !important; /* Keep space for the icon */
+        }
+        
+        .reveal .slides section:not(.title-slide) .slide-icon {
+            top: 5px !important; /* Position higher than title */
+            font-size: 2rem !important; /* Slightly smaller */
+            opacity: 0.6 !important; /* More subtle */
+        }
+        
+        /* Keep title slide icon as is */
+        .reveal .slides section.title-slide .slide-icon {
+            position: static !important;
+            margin: 0.8rem auto 1.5rem auto !important;
+            font-size: 5rem !important;
+            opacity: 0.9 !important;
+        }
+        
+        /* Ensure buttons are properly positioned as well */
+        .back-to-index {
+            top: 5px !important;
+        }
+    </style>
+    
     <!-- Add additional emergency script -->
     <script>
         // Emergency check for back-to-index buttons
@@ -354,6 +383,51 @@
             // Make available globally
             window.forceHideLoading = forceHideLoading;
         })();
+    </script>
+    
+    <!-- Emergency script to fix icon positioning -->
+    <script>
+        function emergencyIconTitleFix() {
+            console.log("Running emergency icon/title positioning fix");
+            
+            // Fix slide icons to prevent overlap with titles
+            document.querySelectorAll('.reveal .slides section:not(.title-slide) .slide-icon').forEach(icon => {
+                icon.style.top = '5px';
+                icon.style.fontSize = '2rem';
+                icon.style.opacity = '0.6';
+            });
+            
+            // Add space above titles
+            document.querySelectorAll('.reveal .slides section:not(.title-slide) h2').forEach(title => {
+                title.style.marginTop = '2.5rem';
+                title.style.paddingRight = '2.5rem';
+            });
+            
+            // Keep title slide icon as is
+            document.querySelectorAll('.reveal .slides section.title-slide .slide-icon').forEach(icon => {
+                icon.style.position = 'static';
+                icon.style.margin = '0.8rem auto 1.5rem auto';
+                icon.style.textAlign = 'center';
+                icon.style.display = 'block';
+                icon.style.fontSize = '5rem';
+                icon.style.opacity = '0.9';
+            });
+        }
+        
+        // Run on page load and after slides are created
+        window.addEventListener('load', function() {
+            setTimeout(emergencyIconTitleFix, 500);
+            setTimeout(emergencyIconTitleFix, 1500);
+            
+            // Also run when slides change
+            if (typeof Reveal !== 'undefined') {
+                Reveal.addEventListener('slidechanged', emergencyIconTitleFix);
+                Reveal.addEventListener('ready', emergencyIconTitleFix);
+            }
+        });
+        
+        // Make available globally
+        window.emergencyIconTitleFix = emergencyIconTitleFix;
     </script>
     
     <!-- Core functionality scripts -->

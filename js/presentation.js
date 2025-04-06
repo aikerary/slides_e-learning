@@ -514,7 +514,7 @@ function formatText(text, language) {
 }
 
 /**
- * Fix icon positioning
+ * Fix icon positioning to prevent overlap with title
  */
 function fixIconPositioning() {
     const icons = document.querySelectorAll('.slide-icon');
@@ -529,12 +529,23 @@ function fixIconPositioning() {
             icon.style.textAlign = 'center';
             icon.style.margin = '0.5rem auto 1.5rem auto';
             icon.style.display = 'block';
+            icon.style.fontSize = '5rem';
+            icon.style.opacity = '0.9';
         } else {
-            // Regular slide icon in top right
+            // Regular slide icon in top right - higher position to avoid title overlap
             icon.style.position = 'absolute';
-            icon.style.top = '10px';
+            icon.style.top = '5px'; // Higher position
             icon.style.right = '10px';
             icon.style.zIndex = '1000';
+            icon.style.fontSize = '2rem'; // Slightly smaller
+            icon.style.opacity = '0.6'; // More subtle
+            
+            // Also adjust the title in this slide for proper spacing
+            const title = slide.querySelector('h2');
+            if (title) {
+                title.style.marginTop = '2.5rem';
+                title.style.paddingRight = '2.5rem';
+            }
         }
     });
 }

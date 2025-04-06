@@ -1,0 +1,53 @@
+/**
+ * Special file to fix icon and title positioning
+ * Ensures icons don't overlap with slide titles (except on title slide)
+ */
+
+/* Add more space above slide titles */
+.reveal .slides section:not(.title-slide) h2 {
+    margin-top: 2.5rem !important;
+    padding-right: 2.5rem !important;
+    max-width: calc(100% - 3rem) !important;
+}
+
+/* Position icons higher in the slide */
+.reveal .slides section:not(.title-slide) .slide-icon {
+    position: absolute !important;
+    top: 5px !important;
+    right: 10px !important;
+    font-size: 2rem !important;
+    opacity: 0.6 !important;
+}
+
+/* Keep title slide icon special positioning */
+.reveal .slides section.title-slide .slide-icon {
+    position: static !important;
+    display: block !important;
+    text-align: center !important;
+    margin: 0.8rem auto 1.5rem auto !important;
+    font-size: 5rem !important;
+    opacity: 0.9 !important;
+}
+
+/* Reposition index button to match new icon height */
+.back-to-index {
+    top: 5px !important;
+}
+
+/* For mobile screens, adjust proportionally */
+@media (max-width: 768px) {
+    .reveal .slides section:not(.title-slide) h2 {
+        margin-top: 2rem !important;
+        padding-right: 2rem !important;
+    }
+    
+    .reveal .slides section:not(.title-slide) .slide-icon {
+        font-size: 1.6rem !important;
+    }
+}
+
+/* Dark theme adjustments for better visibility */
+.dark-theme .reveal .slides section:not(.title-slide) .slide-icon {
+    opacity: 0.7 !important;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+}
