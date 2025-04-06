@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="styles/lms-gallery.css">
     <link rel="stylesheet" href="styles/blue-index-button.css">
     <link rel="stylesheet" href="styles/loader-fix.css">
+    <link rel="stylesheet" href="styles/loading-overlay-fix.css">
     
     <!-- Emergency styling for language toggle -->
     <style>
@@ -212,6 +213,129 @@
         /* Ensure buttons are properly positioned as well */
         .back-to-index {
             top: 5px !important;
+        }
+    </style>
+    
+    <!-- Emergency styling for loading overlay to cover full screen and block clicks -->
+    <style>
+        /* Full-screen overlay that blocks clicks */
+        body.language-loading {
+            overflow: hidden !important;
+            position: fixed !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        #language-loading-indicator {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 99999 !important; /* Very high z-index */
+            pointer-events: all !important; /* Critical - capture clicks */
+            margin: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .loading-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background-color: rgba(0, 0, 0, 0.85) !important;
+            pointer-events: all !important;
+        }
+        
+        /* Larger spinner for better visibility */
+        .loading-spinner {
+            width: 5rem !important;
+            height: 5rem !important;
+            border-width: 0.3rem !important;
+        }
+        
+        /* Larger text for better readability */
+        .loading-overlay p {
+            font-size: 1.5rem !important;
+            font-weight: 500 !important;
+            max-width: 80% !important;
+            margin: 1.5rem auto !important;
+        }
+    </style>
+    
+    <!-- Emergency styling for loader positioning - CRITICAL FIX -->
+    <style>
+        /* Force absolute centering of language loading spinner */
+        #language-loading-indicator,
+        body.language-loading #language-loading-indicator {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 999999 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+            pointer-events: all !important;
+            background: rgba(0, 0, 0, 0.85) !important;
+            overflow: hidden !important;
+        }
+        
+        /* Center the spinner and text in the overlay */
+        .loading-overlay {
+            width: 100% !important;
+            height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Make spinner larger and centered */
+        .loading-spinner {
+            width: 6rem !important;
+            height: 6rem !important;
+            border-width: 0.4rem !important;
+            margin: 0 auto 2rem auto !important;
+            position: relative !important;
+            left: 0 !important;
+            animation: spin 1s linear infinite !important;
+        }
+        
+        /* Make text perfectly centered */
+        .loading-overlay p {
+            width: 100% !important;
+            max-width: 80% !important;
+            text-align: center !important;
+            margin: 1rem auto !important;
+            color: white !important;
+            font-size: 1.6rem !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Force fixed positioning on body during loading */
+        body.language-loading {
+            position: fixed !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
         }
     </style>
     
@@ -430,6 +554,68 @@
         window.emergencyIconTitleFix = emergencyIconTitleFix;
     </script>
     
+    <!-- Improved loading indicator with absolute centering -->
+    <script>
+        // Completely override the existing function with one that guarantees perfect centering
+        window.showLanguageLoadingIndicator = function() {
+            console.log("Showing perfectly centered loading indicator");
+            
+            // First remove any existing indicator
+            const existingIndicator = document.getElementById('language-loading-indicator');
+            if (existingIndicator) {
+                existingIndicator.remove();
+            }
+            
+            // Create a new indicator with absolutely centered positioning
+            const loadingIndicator = document.createElement('div');
+            loadingIndicator.id = 'language-loading-indicator';
+            
+            // Explicitly set all positioning styles inline to ensure they take effect
+            Object.assign(loadingIndicator.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                right: '0',
+                bottom: '0',
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: '999999',
+                margin: '0',
+                padding: '0',
+                pointerEvents: 'all',
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                boxSizing: 'border-box',
+                overflow: 'hidden'
+            });
+            
+            // Create the inner content with guaranteed centering
+            const spinnerSize = '6rem';
+            const spinnerBorder = '0.4rem';
+            
+            // Set the inner HTML using a template string with inline styles
+            loadingIndicator.innerHTML = `
+                <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:0;padding:0;">
+                    <div style="width:${spinnerSize};height:${spinnerSize};margin:0 auto 2rem;border:${spinnerBorder} solid rgba(255,255,255,0.3);border-top:${spinnerBorder} solid #0077cc;border-radius:50%;animation:spin 1s linear infinite;"></div>
+                    <p style="width:100%;max-width:80%;color:white;font-size:1.6rem;font-weight:500;text-align:center;margin:1rem auto;padding:0;">Cambiando idioma / Changing language...</p>
+                </div>
+            `;
+            
+            // Add to body
+            document.body.appendChild(loadingIndicator);
+            
+            // Lock body scrolling
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+            document.body.style.height = '100%';
+            
+            console.log('Perfectly centered loading indicator displayed');
+        };
+    </script>
+    
     <!-- Core functionality scripts -->
     <script src="js/date-formatter.js"></script>
     <script src="js/language-toggle.js"></script>
@@ -437,6 +623,109 @@
     <script src="js/presentation.js"></script>
     <script src="js/index-navigation.js"></script>
     <script src="js/lms-interactions.js"></script>
+    
+    <!-- Emergency script to ensure language toggle works -->
+    <script>
+        // Wait for everything to load
+        window.addEventListener('load', function() {
+            // Verify toggle is initialized
+            setTimeout(function() {
+                const toggleBtn = document.getElementById('language-toggle-btn');
+                if (toggleBtn && !toggleBtn.hasAttribute('data-language-toggle-initialized')) {
+                    console.warn('Language toggle initialization failed in normal flow, applying fallback');
+                    
+                    // Define global fallback if it doesn't exist
+                    if (typeof window.handleLanguageToggle !== 'function') {
+                        window.handleLanguageToggle = function() {
+                            console.log('Using emergency language toggle handler');
+                            
+                            // Get current language and switch
+                            const currentLang = localStorage.getItem('presentationLanguage') || 'es';
+                            const newLang = currentLang === 'es' ? 'en' : 'es';
+                            
+                            // Store preference
+                            localStorage.setItem('presentationLanguage', newLang);
+                            
+                            // Update UI
+                            const textElement = toggleBtn.querySelector('.language-text');
+                            if (textElement) {
+                                textElement.textContent = newLang.toUpperCase();
+                            }
+                            
+                            // Reload page - simplest solution
+                            location.reload();
+                        };
+                    }
+                    
+                    // Apply handler directly
+                    toggleBtn.onclick = function() {
+                        window.handleLanguageToggle();
+                        return false;
+                    };
+                    
+                    toggleBtn.setAttribute('data-language-toggle-initialized', 'true');
+                }
+            }, 2000);
+        });
+    </script>
+    
+    <!-- Improved loading indicator that blocks clicks and covers screen -->
+    <script>
+        (function() {
+            // Store original function if it exists
+            const originalShowLoadingIndicator = window.showLanguageLoadingIndicator;
+            
+            // Override with improved version
+            window.showLanguageLoadingIndicator = function() {
+                console.log("Showing enhanced loading indicator");
+                
+                // First try to remove any existing indicator
+                const existingIndicator = document.getElementById('language-loading-indicator');
+                if (existingIndicator) {
+                    existingIndicator.remove();
+                }
+                
+                // Create enhanced loading indicator
+                const loadingIndicator = document.createElement('div');
+                loadingIndicator.id = 'language-loading-indicator';
+                loadingIndicator.style.position = 'fixed';
+                loadingIndicator.style.top = '0';
+                loadingIndicator.style.left = '0';
+                loadingIndicator.style.width = '100vw';
+                loadingIndicator.style.height = '100vh';
+                loadingIndicator.style.zIndex = '99999';
+                loadingIndicator.style.pointerEvents = 'all';
+                loadingIndicator.style.display = 'flex';
+                loadingIndicator.style.alignItems = 'center';
+                loadingIndicator.style.justifyContent = 'center';
+                
+                // HTML content
+                loadingIndicator.innerHTML = `
+                    <div class="loading-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:all;">
+                        <div class="loading-spinner" style="width:5rem;height:5rem;border:0.3rem solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:#0077cc;animation:spin 1s linear infinite;margin:0 auto 1.5rem;"></div>
+                        <p style="color:white;font-size:1.5rem;font-weight:500;text-align:center;margin:1rem 0;padding:0 2rem;">Cambiando idioma / Changing language...</p>
+                    </div>
+                `;
+                
+                // Add to body
+                document.body.appendChild(loadingIndicator);
+                
+                // Lock body scrolling
+                document.body.style.overflow = 'hidden';
+                
+                // Call original function if it exists
+                if (originalShowLoadingIndicator && typeof originalShowLoadingIndicator === 'function') {
+                    try {
+                        originalShowLoadingIndicator();
+                    } catch (e) {
+                        console.error("Error in original loading indicator:", e);
+                    }
+                }
+                
+                console.log('Enhanced loading indicator displayed');
+            };
+        })();
+    </script>
 </head>
 <body>
     <!-- Theme Toggle Switch -->
@@ -490,50 +779,5 @@
     <script src="js/theme-toggle.js"></script>
     <script src="js/presentation.js"></script>
     <script src="js/index-navigation.js"></script>
-    
-    <!-- Emergency script to ensure language toggle works -->
-    <script>
-        // Wait for everything to load
-        window.addEventListener('load', function() {
-            // Verify toggle is initialized
-            setTimeout(function() {
-                const toggleBtn = document.getElementById('language-toggle-btn');
-                if (toggleBtn && !toggleBtn.hasAttribute('data-language-toggle-initialized')) {
-                    console.warn('Language toggle initialization failed in normal flow, applying fallback');
-                    
-                    // Define global fallback if it doesn't exist
-                    if (typeof window.handleLanguageToggle !== 'function') {
-                        window.handleLanguageToggle = function() {
-                            console.log('Using emergency language toggle handler');
-                            
-                            // Get current language and switch
-                            const currentLang = localStorage.getItem('presentationLanguage') || 'es';
-                            const newLang = currentLang === 'es' ? 'en' : 'es';
-                            
-                            // Store preference
-                            localStorage.setItem('presentationLanguage', newLang);
-                            
-                            // Update UI
-                            const textElement = toggleBtn.querySelector('.language-text');
-                            if (textElement) {
-                                textElement.textContent = newLang.toUpperCase();
-                            }
-                            
-                            // Reload page - simplest solution
-                            location.reload();
-                        };
-                    }
-                    
-                    // Apply handler directly
-                    toggleBtn.onclick = function() {
-                        window.handleLanguageToggle();
-                        return false;
-                    };
-                    
-                    toggleBtn.setAttribute('data-language-toggle-initialized', 'true');
-                }
-            }, 2000);
-        });
-    </script>
 </body>
 </html>

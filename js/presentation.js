@@ -208,6 +208,7 @@ window.updatePresentationLanguage = function(lang) {
 
 /**
  * Show language loading indicator
+ * Improved to cover entire screen and block clicks
  */
 function showLanguageLoadingIndicator() {
     // Remove any existing indicator
@@ -216,20 +217,40 @@ function showLanguageLoadingIndicator() {
         existingIndicator.remove();
     }
     
-    // Create new loading indicator with improved centering
+    // Create enhanced loading indicator with proper full-screen coverage
     const loadingIndicator = document.createElement('div');
     loadingIndicator.id = 'language-loading-indicator';
+    // Use inline styles for critical properties to ensure they're applied
+    loadingIndicator.style.position = 'fixed';
+    loadingIndicator.style.top = '0';
+    loadingIndicator.style.left = '0';
+    loadingIndicator.style.right = '0';
+    loadingIndicator.style.bottom = '0';
+    loadingIndicator.style.width = '100vw';
+    loadingIndicator.style.height = '100vh';
+    loadingIndicator.style.zIndex = '99999';
+    loadingIndicator.style.pointerEvents = 'all';
+    loadingIndicator.style.margin = '0';
+    loadingIndicator.style.padding = '0';
+    loadingIndicator.style.display = 'flex';
+    loadingIndicator.style.alignItems = 'center';
+    loadingIndicator.style.justifyContent = 'center';
+    
+    // Set HTML content with inline styles to ensure proper appearance
     loadingIndicator.innerHTML = `
-        <div class="loading-overlay">
-            <div class="loading-spinner" aria-label="Cambiando idioma"></div>
-            <p>Cambiando idioma / Changing language...</p>
+        <div class="loading-overlay" style="position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;background-color:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:all;">
+            <div class="loading-spinner" style="width:5rem;height:5rem;border:0.3rem solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:#0077cc;animation:spin 1s linear infinite;margin:0 auto 1.5rem;"></div>
+            <p style="color:white;font-size:1.5rem;font-weight:500;text-align:center;margin:1rem 0;padding:0 2rem;">Cambiando idioma / Changing language...</p>
         </div>
     `;
     
     // Add to body
     document.body.appendChild(loadingIndicator);
     
-    console.log('Loading indicator displayed');
+    // Lock body scrolling to prevent background interaction
+    document.body.style.overflow = 'hidden';
+    
+    console.log('Enhanced loading indicator displayed');
 }
 
 /**
@@ -240,13 +261,17 @@ function hideLanguageLoadingIndicator(force = false) {
     const loadingIndicator = document.getElementById('language-loading-indicator');
     if (!loadingIndicator) return;
     
+    // Re-enable scrolling
+    document.body.style.overflow = '';
+    
     if (force) {
         // Immediately remove the indicator
         loadingIndicator.remove();
         console.log('Loading indicator forcibly removed');
     } else {
-        // Fade out then remove
+        // Fade out then remove, but maintain pointer-events blocking during fade
         loadingIndicator.style.opacity = '0';
+        loadingIndicator.style.transition = 'opacity 0.3s ease-out';
         
         // Remove from DOM after fade out
         setTimeout(() => {
@@ -263,6 +288,8 @@ function hideLanguageLoadingIndicator(force = false) {
         if (stuckIndicator) {
             console.warn('Found stuck loading indicator, removing it');
             stuckIndicator.remove();
+            // Re-enable scrolling just in case
+            document.body.style.overflow = '';
         }
     }, 500);
 }
