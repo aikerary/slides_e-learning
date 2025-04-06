@@ -200,7 +200,7 @@ function triggerLanguageChangedEvent(language) {
 }
 
 /**
- * Create loading indicator
+ * Create loading indicator with perfect centering
  */
 function createLoadingIndicator() {
     // Check if indicator already exists
@@ -211,31 +211,40 @@ function createLoadingIndicator() {
     // Create new loading indicator
     const loadingIndicator = document.createElement('div');
     loadingIndicator.id = 'language-loading-indicator';
+    
+    // Add an inner wrapper to assist with centering
     loadingIndicator.innerHTML = `
         <div class="loading-overlay">
             <div class="loading-spinner"></div>
-            <p>Cambiando idioma / Changing language...</p>
+            <p><strong>Cambiando idioma / Changing language...</strong></p>
             <p class="loading-message-small">Por favor espere / Please wait</p>
         </div>
     `;
     
-    // Add custom styling for small message
-    const style = document.createElement('style');
-    style.textContent = `
-        .loading-message-small {
-            font-size: 0.9em;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
+    // Apply important inline styles to ensure proper centering
+    loadingIndicator.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        display: none;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: rgba(0, 0, 0, 0.85) !important;
+        z-index: 2147483647 !important;
     `;
-    document.head.appendChild(style);
     
     // Add to body
     document.body.appendChild(loadingIndicator);
+    
+    console.log('Loading indicator created with perfect centering');
 }
 
 /**
- * Show language loading indicator
+ * Show language loading indicator with focused centering
  */
 function showLoadingIndicator() {
     let indicator = document.getElementById('language-loading-indicator');
@@ -246,14 +255,27 @@ function showLoadingIndicator() {
         indicator = document.getElementById('language-loading-indicator');
     }
     
-    // Display the indicator
+    // Ensure body has the loading class
+    document.body.classList.add('language-loading');
+    document.body.classList.add('language-loading-active');
+    
+    // Force indicator to be visible by modifying style directly
     indicator.style.display = 'flex';
-    
-    // Trigger reflow before adding opacity for transition
-    void indicator.offsetWidth;
-    
-    // Fade in
     indicator.style.opacity = '1';
+    indicator.style.visibility = 'visible';
+    
+    // Ensure proper centering by setting additional properties
+    indicator.style.justifyContent = 'center';
+    indicator.style.alignItems = 'center';
+    
+    // Focus on the loading overlay for screen readers (accessibility)
+    const overlay = indicator.querySelector('.loading-overlay');
+    if (overlay) {
+        overlay.setAttribute('tabindex', '-1');
+        overlay.setAttribute('aria-live', 'assertive');
+    }
+    
+    console.log('Loading indicator displayed with proper centering');
 }
 
 /**

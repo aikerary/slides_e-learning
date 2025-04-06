@@ -1,0 +1,186 @@
+/**
+ * Enhanced language loading styles with perfect centering
+ */
+
+/* Fullscreen overlay with proper centering */
+#language-loading-indicator {
+    /* Position fixed with 0 values on all sides ensures full coverage */
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    
+    /* Centering with flexbox */
+    display: none;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    /* Visual styling */
+    background-color: rgba(0, 0, 0, 0.85) !important; /* Darker for better contrast */
+    z-index: 2147483647 !important; /* Maximum z-index */
+    
+    /* Animation properties */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    /* Ensure no margins or padding interfere */
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    /* Other important properties */
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    pointer-events: all !important;
+}
+
+/* Loading box with enhanced centering */
+.loading-overlay {
+    /* Core positioning - no absolute/relative positioning that could throw off centering */
+    margin: 0 auto !important;
+    
+    /* Visual styling */
+    background-color: var(--card-bg-color, white);
+    padding: 50px !important;
+    border-radius: 15px !important;
+    text-align: center !important;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.7) !important;
+    
+    /* Size constraints */
+    max-width: 90% !important;
+    width: 450px !important;
+    
+    /* Ensure proper z-index */
+    position: relative !important;
+    z-index: 2147483647 !important;
+    
+    /* Animation */
+    animation: pulse 2s infinite ease-in-out !important;
+    
+    /* Transform to adjust vertical position if needed */
+    transform: translateY(0) !important;
+}
+
+/* Large spinner perfectly centered within its container */
+.loading-spinner {
+    /* Sizing */
+    width: 80px !important;
+    height: 80px !important;
+    
+    /* Border styling */
+    border: 8px solid #f3f3f3 !important;
+    border-top: 8px solid var(--primary-color, #0077cc) !important;
+    border-radius: 50% !important;
+    
+    /* Center in container */
+    margin: 0 auto 30px auto !important;
+    
+    /* Animation */
+    animation: spin 1.5s linear infinite !important;
+    
+    /* Ensure it works across browsers */
+    box-sizing: border-box !important;
+}
+
+/* Large text for better visibility */
+.loading-overlay p {
+    font-size: 1.5rem !important;
+    margin: 15px 0 !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    color: var(--text-color, #333) !important;
+}
+
+.loading-message-small {
+    font-size: 1.1rem !important;
+    opacity: 0.8 !important;
+    margin-top: 10px !important;
+    font-weight: 400 !important;
+}
+
+/* Make sure it's displayed when loading class is added to body */
+body.language-loading #language-loading-indicator {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Special keyframes for spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Subtle pulse animation for the loading box */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* Dark theme adjustments */
+body.dark-theme .loading-overlay {
+    background-color: #222 !important;
+    color: #eaeaea !important;
+}
+
+body.dark-theme .loading-overlay p {
+    color: #eaeaea !important;
+}
+
+body.dark-theme .loading-spinner {
+    border-color: #444 !important;
+    border-top-color: var(--primary-color, #3a76d8) !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+    .loading-overlay {
+        width: 85% !important;
+        padding: 40px 20px !important;
+    }
+    
+    .loading-spinner {
+        width: 70px !important;
+        height: 70px !important;
+        border-width: 7px !important;
+    }
+    
+    .loading-overlay p {
+        font-size: 1.3rem !important;
+    }
+    
+    .loading-message-small {
+        font-size: 1rem !important;
+    }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+    .loading-overlay {
+        padding: 30px 15px !important;
+    }
+    
+    .loading-spinner {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    /* Adjust vertical position slightly on small screens */
+    #language-loading-indicator {
+        align-items: center !important;
+    }
+}
+
+/* Center adjustment for devices with notches or unusual aspect ratios */
+@supports (padding: max(0px)) {
+    #language-loading-indicator {
+        padding: 
+            max(0px, env(safe-area-inset-top)) 
+            max(0px, env(safe-area-inset-right)) 
+            max(0px, env(safe-area-inset-bottom)) 
+            max(0px, env(safe-area-inset-left)) !important;
+    }
+}
