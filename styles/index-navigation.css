@@ -1,0 +1,53 @@
+/* Styling for the back-to-index button - positioned in top left corner with blue color */
+
+.back-to-index {
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 9999 !important;
+    cursor: pointer !important;
+    font-size: 1.2rem;
+    color: #0077cc !important; /* Blue color - important flag to override any other styling */
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    padding: 5px 8px !important;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-flex !important;
+    align-items: center;
+    user-select: none;
+    width: auto !important;
+    max-width: none !important;
+}
+
+.back-to-index:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.back-to-index:active {
+    transform: scale(0.95);
+}
+
+.back-to-index i {
+    color: #0077cc !important; /* Blue color for the icon */
+    margin-right: 0 !important;
+}
+
+/* For smaller screens, ensure the button doesn't overlap with content */
+@media (max-width: 768px) {
+    .back-to-index {
+        font-size: 1.1rem;
+        padding: 4px 6px !important;
+    }
+}
+
+/* For print mode, hide the button */
+@media print {
+    .back-to-index {
+        display: none !important;
+    }
+}

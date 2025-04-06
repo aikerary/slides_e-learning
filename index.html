@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="styles/index-slide.css">
     <link rel="stylesheet" href="styles/index-navigation.css">
     <link rel="stylesheet" href="styles/lms-gallery.css">
+    <link rel="stylesheet" href="styles/blue-index-button.css">
+    <link rel="stylesheet" href="styles/loader-fix.css">
     
     <!-- Emergency styling for language toggle -->
     <style>
@@ -69,6 +71,121 @@
         }
     </style>
     
+    <!-- Emergency styling for index button - BLUE and TOP LEFT -->
+    <style>
+        /* Force blue index button in top left */
+        .back-to-index {
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            right: auto !important;
+            bottom: auto !important;
+            z-index: 9999 !important;
+            color: #0077cc !important;
+            width: auto !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            padding: 5px 8px !important;
+        }
+        
+        .back-to-index i {
+            color: #0077cc !important;
+        }
+        
+        /* Override any conflicting styles */
+        .reveal .slides section .back-to-index {
+            position: absolute !important;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 9999 !important;
+            width: auto !important;
+            max-width: none !important;
+        }
+        
+        /* Fix for dark theme */
+        .dark-theme .back-to-index,
+        .dark-theme .back-to-index i {
+            color: #0099ff !important;
+        }
+        
+        /* Make it more visible */
+        .back-to-index:hover {
+            opacity: 1 !important;
+            transform: scale(1.05) !important;
+            background-color: rgba(255, 255, 255, 0.4) !important;
+        }
+    </style>
+    
+    <!-- Emergency styling for loader centering -->
+    <style>
+        /* Fix for spinner centering */
+        .loading-section {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 100vh !important;
+            width: 100% !important;
+            text-align: center !important;
+        }
+        
+        .loader {
+            margin: 0 auto !important;
+            display: block !important;
+            position: relative !important;
+            left: 0 !important;
+            right: 0 !important;
+        }
+        
+        /* Make spinner more visible */
+        .loader {
+            width: 4rem !important;
+            height: 4rem !important;
+            border-width: 0.35rem !important;
+        }
+        
+        /* Language loading spinner also needs centering */
+        .loading-spinner {
+            margin: 0 auto 1rem auto !important;
+        }
+        
+        /* Ensure the language loading indicator is properly centered */
+        #language-loading-indicator {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .loading-overlay {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+    </style>
+    
+    <!-- Emergency styling for loader disappearing -->
+    <style>
+        /* Force loading indicators to disappear if they get stuck */
+        #language-loading-indicator {
+            transition: opacity 0.3s ease-out !important;
+        }
+        
+        /* Force removal after language change finishes */
+        body:not(.language-loading) #language-loading-indicator,
+        body:not(.language-loading-active) #language-loading-indicator {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+        
+        /* Force removal with animation classes too */
+        .language-change-complete #language-loading-indicator {
+            display: none !important;
+        }
+    </style>
+    
     <!-- Add additional emergency script -->
     <script>
         // Emergency check for back-to-index buttons
@@ -84,12 +201,28 @@
                     backButton.className = 'back-to-index';
                     backButton.innerHTML = '<i class="fas fa-list"></i>';
                     backButton.title = buttonTitle;
-                    backButton.style.cssText = 'position:absolute !important; top:10px !important; left:10px !important; z-index:10000 !important; cursor:pointer !important; font-size:1.2rem; color:var(--primary-color,#0077cc); opacity:0.7; transition:all 0.3s ease; padding:5px; border-radius:3px; background-color:rgba(255,255,255,0.2);';
+                    backButton.style.cssText = 'position:absolute !important; top:10px !important; left:10px !important; z-index:10000 !important; cursor:pointer !important; font-size:1.2rem; color:#0077cc !important; opacity:0.7; transition:all 0.3s ease; padding:5px 8px !important; border-radius:3px; background-color:rgba(255,255,255,0.2); display:inline-flex !important; align-items:center; width:auto !important; max-width:none !important;';
                     backButton.onclick = function(e) {
                         e.stopPropagation();
                         Reveal.slide(1);
                     };
                     slide.insertBefore(backButton, slide.firstChild);
+                }
+                
+                // Make sure existing buttons are properly styled
+                const existingButton = slide.querySelector('.back-to-index');
+                if (existingButton) {
+                    existingButton.style.position = 'absolute';
+                    existingButton.style.top = '10px';
+                    existingButton.style.left = '10px';
+                    existingButton.style.color = '#0077cc';
+                    existingButton.style.zIndex = '9999';
+                    
+                    // Force icon color
+                    const icon = existingButton.querySelector('i');
+                    if (icon) {
+                        icon.style.color = '#0077cc';
+                    }
                 }
             });
         };
@@ -97,12 +230,130 @@
         // Set up periodic checks
         window.addEventListener('load', function() {
             // Initial checks
-            setTimeout(window.backToIndexEmergencyCheck, 1000);
+            setTimeout(window.backToIndexEmergencyCheck, 500);
+            setTimeout(window.backToIndexEmergencyCheck, 1500);
             setTimeout(window.backToIndexEmergencyCheck, 3000);
             
             // Periodic check
             setInterval(window.backToIndexEmergencyCheck, 5000);
         });
+    </script>
+    
+    <!-- Emergency script for blue index button in top left -->
+    <script>
+        // Immediately apply index button positioning and color
+        (function() {
+            function emergencyFixIndexButtons() {
+                console.log("Fixing index buttons - BLUE + TOP LEFT");
+                var buttons = document.querySelectorAll('.back-to-index');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].style.position = 'absolute';
+                    buttons[i].style.top = '10px';
+                    buttons[i].style.left = '10px';
+                    buttons[i].style.right = 'auto';
+                    buttons[i].style.bottom = 'auto';
+                    buttons[i].style.zIndex = '9999';
+                    buttons[i].style.color = '#0077cc';
+                    buttons[i].style.width = 'auto';
+                    buttons[i].style.display = 'inline-flex';
+                    buttons[i].style.alignItems = 'center';
+                    
+                    // Force icon color to blue
+                    var icon = buttons[i].querySelector('i');
+                    if (icon) {
+                        icon.style.color = '#0077cc';
+                    }
+                }
+            }
+            
+            // Run immediately
+            emergencyFixIndexButtons();
+            
+            // Run after a delay
+            setTimeout(emergencyFixIndexButtons, 500);
+            setTimeout(emergencyFixIndexButtons, 1000);
+            setTimeout(emergencyFixIndexButtons, 2000);
+            
+            // Run after page load
+            window.addEventListener('load', function() {
+                emergencyFixIndexButtons();
+                setTimeout(emergencyFixIndexButtons, 500);
+                
+                // Listen for Reveal.js events
+                if (typeof Reveal !== 'undefined') {
+                    Reveal.addEventListener('slidechanged', emergencyFixIndexButtons);
+                    Reveal.addEventListener('ready', emergencyFixIndexButtons);
+                }
+                
+                // Set up periodic checks
+                setInterval(emergencyFixIndexButtons, 3000);
+            });
+            
+            // Make available globally
+            window.emergencyFixIndexButtons = emergencyFixIndexButtons;
+        })();
+    </script>
+    
+    <!-- Emergency script to force-hide loading indicators -->
+    <script>
+        // Force hide any stuck loading indicators
+        (function() {
+            // Create a function to force hide any loading indicators
+            function forceHideLoading() {
+                console.log("Emergency check for stuck loading indicators");
+                
+                // Remove any loading indicator that might be stuck
+                const indicator = document.getElementById('language-loading-indicator');
+                if (indicator) {
+                    console.warn("Found stuck loading indicator, removing it");
+                    indicator.remove();
+                }
+                
+                // Also remove loading classes from body
+                document.body.classList.remove('language-loading');
+                document.body.classList.remove('language-loading-active');
+                
+                // Show slides if they were hidden
+                const slidesContainer = document.querySelector('.reveal .slides');
+                if (slidesContainer) {
+                    slidesContainer.style.opacity = '';
+                    slidesContainer.style.visibility = '';
+                }
+                
+                // Add completed class
+                document.body.classList.add('language-change-complete');
+            }
+            
+            // Set up periodic checks and timeline-based checks
+            window.addEventListener('load', function() {
+                // Check after 10 seconds no matter what
+                setTimeout(forceHideLoading, 10000);
+                
+                // Also check on slide changes
+                if (typeof Reveal !== 'undefined') {
+                    Reveal.addEventListener('slidechanged', function() {
+                        // If we're changing slides, we should be done loading
+                        forceHideLoading();
+                    });
+                    
+                    Reveal.addEventListener('ready', function() {
+                        // If Reveal is ready, we should be done loading
+                        forceHideLoading();
+                    });
+                }
+                
+                // Listen for any click on the document as a last resort
+                document.addEventListener('click', function() {
+                    const indicator = document.getElementById('language-loading-indicator');
+                    if (indicator && !document.body.classList.contains('language-loading-active')) {
+                        forceHideLoading();
+                    }
+                });
+            });
+            
+            // Make available globally
+            window.forceHideLoading = forceHideLoading;
+        })();
     </script>
     
     <!-- Core functionality scripts -->

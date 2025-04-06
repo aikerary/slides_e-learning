@@ -1,0 +1,50 @@
+/* Fix for slide icons positioning - ensures content icons are in top right */
+
+/* Main slide icon (not back-to-index) should be in the top right */
+.reveal .slides section:not(.title-slide) .slide-icon {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    left: auto !important;
+    bottom: auto !important;
+    z-index: 100 !important;
+}
+
+/* Title slide icon exception - centered */
+.reveal .slides section.title-slide .slide-icon {
+    position: static !important;
+    display: block !important;
+    text-align: center !important;
+    margin: 0.8rem auto 1.5rem auto !important;
+}
+
+/* Back-to-index icon should be in the top left and ALWAYS blue */
+.back-to-index {
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: 9999 !important;
+    color: #0077cc !important;
+}
+
+/* Force blue color on the icon itself */
+.back-to-index i {
+    color: #0077cc !important;
+}
+
+/* Fix z-index to ensure both icons are visible and don't conflict */
+.back-to-index {
+    z-index: 9995 !important; 
+}
+
+.slide-icon {
+    z-index: 9990 !important;
+}
+
+/* Fix for dark theme - ensure index button is still blue */
+.dark-theme .back-to-index,
+.dark-theme .back-to-index i {
+    color: #0099ff !important; /* Slightly brighter blue for dark theme */
+}

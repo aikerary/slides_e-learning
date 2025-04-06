@@ -1,0 +1,53 @@
+/* Dedicated file to ensure the index button is BLUE and positioned in TOP LEFT */
+
+/* Top level selectors to increase specificity */
+html body .reveal .slides section .back-to-index,
+body .reveal .slides section .back-to-index,
+.reveal .slides section .back-to-index,
+.back-to-index {
+    /* Position in top left */
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    right: auto !important;
+    bottom: auto !important;
+    
+    /* Blue color */
+    color: #0077cc !important;
+    
+    /* Make sure it's on top */
+    z-index: 9999 !important;
+    
+    /* Auto width and flex display */
+    width: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    
+    /* Other styling */
+    padding: 5px 8px !important;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Force blue color on the icon */
+html body .reveal .slides section .back-to-index i,
+body .reveal .slides section .back-to-index i,
+.reveal .slides section .back-to-index i,
+.back-to-index i {
+    color: #0077cc !important;
+}
+
+/* Hover effects */
+.back-to-index:hover {
+    opacity: 1 !important;
+    transform: scale(1.05) !important;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Fix for dark theme */
+.dark-theme .back-to-index,
+.dark-theme .back-to-index i {
+    color: #0099ff !important; /* Slightly brighter blue for dark theme */
+}

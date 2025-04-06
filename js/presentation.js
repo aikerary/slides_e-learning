@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
  * Main function to load the presentation
  */
 function loadPresentation() {
-    // Show loading indicator
+    // Show loading indicator with improved centering
     const slidesContainer = document.getElementById('presentation-slides');
     slidesContainer.innerHTML = `
         <section class="loading-section">
             <h2>Cargando presentación...</h2>
-            <div class="loader"></div>
+            <div class="loader" aria-label="Cargando"></div>
         </section>
     `;
     
@@ -95,6 +95,22 @@ window.updatePresentationLanguage = function(lang) {
         // Create and show loading indicator
         showLanguageLoadingIndicator();
         
+        // Set a maximum timeout to hide the loading indicator even if something fails
+        const maxLoadingTime = setTimeout(() => {
+            console.log('Maximum loading time reached, forcing hide of loading indicator');
+            hideLanguageLoadingIndicator(true);
+            
+            // Also remove loading classes from body
+            document.body.classList.remove('language-loading');
+            document.body.classList.remove('language-loading-active');
+            
+            // Show slides again
+            if (slidesContainer) {
+                slidesContainer.style.opacity = '';
+                slidesContainer.style.visibility = '';
+            }
+        }, 8000); // 8 seconds maximum loading time
+        
         // Short delay to ensure UI updates before fetching
         setTimeout(() => {
             // Fetch content
@@ -126,7 +142,11 @@ window.updatePresentationLanguage = function(lang) {
                             
                             // After everything is ready, remove loading classes and show slides
                             setTimeout(() => {
-                                hideLanguageLoadingIndicator();
+                                // Clear the maximum loading timeout
+                                clearTimeout(maxLoadingTime);
+                                
+                                // Hide loading indicator with force flag
+                                hideLanguageLoadingIndicator(true);
                                 
                                 // Show slides again
                                 if (slidesContainer) {
@@ -145,17 +165,32 @@ window.updatePresentationLanguage = function(lang) {
                             }, 400);
                         } catch (e) {
                             console.error('Error navigating to slide:', e);
-                            hideLanguageLoadingIndicator();
+                            clearTimeout(maxLoadingTime);
+                            hideLanguageLoadingIndicator(true);
                             document.body.classList.remove('language-loading');
                             document.body.classList.remove('language-loading-active');
+                            
+                            // Show slides again in case of error
+                            if (slidesContainer) {
+                                slidesContainer.style.opacity = '';
+                                slidesContainer.style.visibility = '';
+                            }
                         }
                     }, 600);
                 })
                 .catch(error => {
                     console.error('Error updating language:', error);
-                    hideLanguageLoadingIndicator();
+                    clearTimeout(maxLoadingTime);
+                    hideLanguageLoadingIndicator(true);
                     document.body.classList.remove('language-loading');
                     document.body.classList.remove('language-loading-active');
+                    
+                    // Show slides again in case of error
+                    if (slidesContainer) {
+                        slidesContainer.style.opacity = '';
+                        slidesContainer.style.visibility = '';
+                    }
+                    
                     alert(`Error updating language: ${error.message}. The page will reload.`);
                     location.reload();
                 });
@@ -164,7 +199,7 @@ window.updatePresentationLanguage = function(lang) {
         return true;
     } catch (error) {
         console.error('Critical error during language update:', error);
-        hideLanguageLoadingIndicator();
+        hideLanguageLoadingIndicator(true);
         document.body.classList.remove('language-loading');
         document.body.classList.remove('language-loading-active');
         return false;
@@ -181,12 +216,12 @@ function showLanguageLoadingIndicator() {
         existingIndicator.remove();
     }
     
-    // Create new loading indicator
+    // Create new loading indicator with improved centering
     const loadingIndicator = document.createElement('div');
     loadingIndicator.id = 'language-loading-indicator';
     loadingIndicator.innerHTML = `
         <div class="loading-overlay">
-            <div class="loading-spinner"></div>
+            <div class="loading-spinner" aria-label="Cambiando idioma"></div>
             <p>Cambiando idioma / Changing language...</p>
         </div>
     `;
@@ -199,18 +234,37 @@ function showLanguageLoadingIndicator() {
 
 /**
  * Hide language loading indicator
+ * @param {boolean} force - Force immediate removal instead of fade out
  */
-function hideLanguageLoadingIndicator() {
+function hideLanguageLoadingIndicator(force = false) {
     const loadingIndicator = document.getElementById('language-loading-indicator');
-    if (loadingIndicator) {
+    if (!loadingIndicator) return;
+    
+    if (force) {
+        // Immediately remove the indicator
+        loadingIndicator.remove();
+        console.log('Loading indicator forcibly removed');
+    } else {
+        // Fade out then remove
         loadingIndicator.style.opacity = '0';
         
         // Remove from DOM after fade out
         setTimeout(() => {
-            loadingIndicator.remove();
-            console.log('Loading indicator removed');
+            if (loadingIndicator.parentNode) {
+                loadingIndicator.remove();
+            }
+            console.log('Loading indicator removed after fade');
         }, 300);
     }
+    
+    // Additional failsafe to ensure indicator doesn't get stuck
+    setTimeout(() => {
+        const stuckIndicator = document.getElementById('language-loading-indicator');
+        if (stuckIndicator) {
+            console.warn('Found stuck loading indicator, removing it');
+            stuckIndicator.remove();
+        }
+    }, 500);
 }
 
 /**
