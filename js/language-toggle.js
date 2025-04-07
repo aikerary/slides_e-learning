@@ -1,159 +1,359 @@
 /**
- * Language toggle functionality with improved loading indicator
+ * Language Toggle Functionality
+ * Allows switching between Spanish and English for the presentation
  */
 
-// Wait for DOM to be ready
+// Language state management
+let currentLanguage = localStorage.getItem('presentationLanguage') || 'es';
+let isChangingLanguage = false;
+
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Language toggle module loaded');
+    console.log('Language toggle initializing...');
     
-    // Initialize the language toggle
+    // Create date formatter utility
+    window.dateFormatter = {
+        getCurrentDate: function(lang) {
+            const today = new Date();
+            if (lang === 'en') {
+                // English format: Month Day, Year
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return today.toLocaleDateString('en-US', options);
+            } else {
+                // Spanish format: Day de Month de Year
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return today.toLocaleDateString('es-ES', options);
+            }
+        }
+    };
+    
+    // Initialize toggle element and add event listeners
     initLanguageToggle();
+    
+    // Set initial language based on localStorage
+    updateLanguageUI(currentLanguage);
+    
+    // Apply language attribute to HTML
+    document.documentElement.lang = currentLanguage;
+    
+    console.log('Language toggle initialized with language:', currentLanguage);
 });
 
 /**
- * Initialize the language toggle functionality
+ * Initialize language toggle functionality
  */
 function initLanguageToggle() {
-    const toggleBtn = document.getElementById('language-toggle-btn');
-    if (!toggleBtn) {
-        console.error('Language toggle button not found');
+    // Get language toggle button
+    const languageToggle = document.getElementById('language-toggle-btn');
+    
+    if (!languageToggle) {
+        console.error('Language toggle button not found in the DOM');
         return;
     }
     
-    // Get stored language preference or default to Spanish
-    const currentLang = localStorage.getItem('presentationLanguage') || 'es';
-    
-    // Update UI to reflect current language
-    updateToggleUI(currentLang);
-    
-    // Set the document language attribute
-    document.documentElement.lang = currentLang;
-    
     // Add click event handler
-    toggleBtn.addEventListener('click', handleLanguageToggle);
+    languageToggle.addEventListener('click', handleLanguageToggle);
+    
+    // Add keyboard handler for accessibility
+    languageToggle.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            handleLanguageToggle();
+        }
+    });
     
     // Mark as initialized
-    toggleBtn.setAttribute('data-language-toggle-initialized', 'true');
+    languageToggle.setAttribute('data-language-toggle-initialized', 'true');
     
-    console.log(`Language toggle initialized with language: ${currentLang}`);
+    // Create global handler for emergency script
+    window.handleLanguageToggle = handleLanguageToggle;
+    
+    // Create loading indicator in advance
+    createLoadingIndicator();
 }
 
 /**
- * Handle language toggle click
+ * Language toggle click handler
  */
-window.handleLanguageToggle = function() {
-    console.log('Language toggle clicked');
+function handleLanguageToggle() {
+    // Prevent multiple rapid clicks
+    if (isChangingLanguage) {
+        console.log('Language change already in progress, ignoring click');
+        return;
+    }
     
-    // Get current language
-    const currentLang = localStorage.getItem('presentationLanguage') || 'es';
-    const newLang = currentLang === 'es' ? 'en' : 'es';
+    // Set busy state
+    isChangingLanguage = true;
     
-    // Update UI immediately to give feedback
-    updateToggleUI(newLang);
+    // Toggle language
+    const newLanguage = currentLanguage === 'es' ? 'en' : 'es';
+    console.log(`Changing language from ${currentLanguage} to ${newLanguage}`);
     
-    // Store preference
-    localStorage.setItem('presentationLanguage', newLang);
+    // Show loading indicator immediately
+    showLoadingIndicator();
     
-    // Set the document language attribute
-    document.documentElement.lang = newLang;
+    // Add loading class to body 
+    document.body.classList.add('language-loading');
+    document.body.classList.add('language-loading-active');
     
-    console.log(`Language changed to ${newLang}`);
+    // Update UI immediately for responsive feel
+    updateLanguageUI(newLanguage);
     
-    // Show loading indicator first before making any content changes
-    showCenteredLoadingIndicator();
+    // Store the new language
+    localStorage.setItem('presentationLanguage', newLanguage);
+    currentLanguage = newLanguage;
     
-    // Update content - Add a small delay to ensure loading UI is visible first
-    setTimeout(() => {
-        if (typeof window.updatePresentationLanguage === 'function') {
-            const success = window.updatePresentationLanguage(newLang);
+    // Update HTML lang attribute
+    document.documentElement.lang = newLanguage;
+    
+    // Use the presentation's update function if available
+    if (typeof window.updatePresentationLanguage === 'function') {
+        try {
+            const success = window.updatePresentationLanguage(newLanguage);
             
-            if (!success) {
-                console.log('Content update failed, reloading page instead');
-                location.reload();
+            if (success) {
+                // Trigger custom event for other components
+                triggerLanguageChangedEvent(newLanguage);
+                
+                // Reset busy state after a delay to prevent rapid toggling
+                setTimeout(() => {
+                    isChangingLanguage = false;
+                }, 1000);
+            } else {
+                console.error('Failed to update presentation language');
+                handleLanguageChangeFailure();
             }
-        } else {
-            console.log('Update function not available, reloading page instead');
-            location.reload();
+        } catch (error) {
+            console.error('Error updating presentation language:', error);
+            handleLanguageChangeFailure();
         }
+    } else {
+        console.warn('updatePresentationLanguage function not available, falling back to page reload');
         
-        // Dispatch custom event for language change
-        const event = new CustomEvent('languageChanged', { detail: { language: newLang } });
-        document.dispatchEvent(event);
-    }, 100);
-};
-
-/**
- * Update the toggle UI to reflect the current language
- */
-function updateToggleUI(lang) {
-    const toggleBtn = document.getElementById('language-toggle-btn');
-    if (!toggleBtn) return;
-    
-    const textElement = toggleBtn.querySelector('.language-text');
-    if (textElement) {
-        textElement.textContent = lang.toUpperCase();
+        // If the update function isn't available, reload the page
+        // This is a fallback approach that ensures content is updated
+        setTimeout(() => {
+            location.reload();
+        }, 500);
     }
 }
 
 /**
- * Show a perfectly centered loading indicator
+ * Update UI elements to reflect current language
  */
-function showCenteredLoadingIndicator() {
-    // Create a centered loading indicator element
+function updateLanguageUI(language) {
+    // Update toggle button text
+    const toggleButton = document.getElementById('language-toggle-btn');
+    if (toggleButton) {
+        const textElement = toggleButton.querySelector('.language-text');
+        if (textElement) {
+            textElement.textContent = language.toUpperCase();
+        }
+    }
+    
+    // Update page title based on language
+    updatePageTitle(language);
+}
+
+/**
+ * Update page title based on language
+ */
+function updatePageTitle(language) {
+    const titleElement = document.querySelector('title');
+    if (!titleElement) return;
+    
+    if (language === 'es') {
+        titleElement.textContent = 'Presentación: Educación en Ambientes Virtuales';
+    } else {
+        titleElement.textContent = 'Presentation: Education in Virtual Environments';
+    }
+}
+
+/**
+ * Handle language change failure
+ */
+function handleLanguageChangeFailure() {
+    // Revert to previous language in localStorage
+    localStorage.setItem('presentationLanguage', currentLanguage);
+    
+    // Update UI to reflect the reversion
+    updateLanguageUI(currentLanguage);
+    
+    // Reset busy state
+    isChangingLanguage = false;
+    
+    // Inform the user
+    alert('No se pudo cambiar el idioma. / Could not change language.');
+}
+
+/**
+ * Trigger custom event for language change
+ */
+function triggerLanguageChangedEvent(language) {
+    const event = new CustomEvent('languageChanged', { 
+        detail: { language: language },
+        bubbles: true,
+        cancelable: true
+    });
+    document.dispatchEvent(event);
+    console.log('Language changed event triggered');
+}
+
+/**
+ * Create loading indicator with perfect centering
+ */
+function createLoadingIndicator() {
+    // Check if indicator already exists
+    if (document.getElementById('language-loading-indicator')) {
+        return;
+    }
+    
+    // Create new loading indicator
     const loadingIndicator = document.createElement('div');
     loadingIndicator.id = 'language-loading-indicator';
     
-    // Explicitly set all positioning styles inline to ensure they take effect
-    Object.assign(loadingIndicator.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: '999999',
-        margin: '0',
-        padding: '0',
-        pointerEvents: 'all',
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
-        boxSizing: 'border-box',
-        overflow: 'hidden'
-    });
-    
-    // Create the inner content with guaranteed centering
-    const spinnerSize = '6rem';
-    const spinnerBorder = '0.4rem';
-    
-    // Set the inner HTML using a template string with inline styles
+    // Add an inner wrapper to assist with centering
     loadingIndicator.innerHTML = `
-        <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:0;padding:0;">
-            <div style="width:${spinnerSize};height:${spinnerSize};margin:0 auto 2rem;border:${spinnerBorder} solid rgba(255,255,255,0.3);border-top:${spinnerBorder} solid #0077cc;border-radius:50%;animation:spin 1s linear infinite;"></div>
-            <p style="width:100%;max-width:80%;color:white;font-size:1.6rem;font-weight:500;text-align:center;margin:1rem auto;padding:0;">Cambiando idioma / Changing language...</p>
+        <div class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p><strong>Cambiando idioma / Changing language...</strong></p>
+            <p class="loading-message-small">Por favor espere / Please wait</p>
         </div>
     `;
     
-    // Remove any existing loading indicator
-    const existingIndicator = document.getElementById('language-loading-indicator');
-    if (existingIndicator) {
-        existingIndicator.remove();
-    }
+    // Apply important inline styles to ensure proper centering
+    loadingIndicator.style.cssText = `
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        display: none;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: rgba(0, 0, 0, 0.85) !important;
+        z-index: 2147483647 !important;
+    `;
     
     // Add to body
     document.body.appendChild(loadingIndicator);
     
-    // Lock body scrolling
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.height = '100%';
+    console.log('Loading indicator created with perfect centering');
+}
+
+/**
+ * Show language loading indicator with focused centering
+ */
+function showLoadingIndicator() {
+    let indicator = document.getElementById('language-loading-indicator');
     
-    // Add loading class to body
+    // Create indicator if it doesn't exist
+    if (!indicator) {
+        createLoadingIndicator();
+        indicator = document.getElementById('language-loading-indicator');
+    }
+    
+    // Ensure body has the loading class
     document.body.classList.add('language-loading');
     document.body.classList.add('language-loading-active');
     
-    console.log('Centered loading indicator displayed');
+    // Force indicator to be visible by modifying style directly
+    indicator.style.display = 'flex';
+    indicator.style.opacity = '1';
+    indicator.style.visibility = 'visible';
+    
+    // Ensure proper centering by setting additional properties
+    indicator.style.justifyContent = 'center';
+    indicator.style.alignItems = 'center';
+    
+    // Focus on the loading overlay for screen readers (accessibility)
+    const overlay = indicator.querySelector('.loading-overlay');
+    if (overlay) {
+        overlay.setAttribute('tabindex', '-1');
+        overlay.setAttribute('aria-live', 'assertive');
+    }
+    
+    console.log('Loading indicator displayed with proper centering');
 }
+
+/**
+ * Hide language loading indicator
+ */
+function hideLoadingIndicator() {
+    const indicator = document.getElementById('language-loading-indicator');
+    if (indicator) {
+        // Fade out
+        indicator.style.opacity = '0';
+        
+        // Remove loading classes from body
+        document.body.classList.remove('language-loading');
+        document.body.classList.remove('language-loading-active');
+        
+        // Remove after transition
+        setTimeout(() => {
+            indicator.style.display = 'none';
+        }, 300);
+    }
+}
+
+/**
+ * Public API for other scripts
+ */
+window.languageToggle = {
+    getCurrentLanguage: function() {
+        return currentLanguage;
+    },
+    
+    setLanguage: function(language) {
+        if (language !== 'es' && language !== 'en') {
+            console.error('Invalid language code. Use "es" or "en".');
+            return false;
+        }
+        
+        // Only proceed if different from current language
+        if (language !== currentLanguage && !isChangingLanguage) {
+            currentLanguage = language;
+            localStorage.setItem('presentationLanguage', language);
+            updateLanguageUI(language);
+            
+            if (typeof window.updatePresentationLanguage === 'function') {
+                return window.updatePresentationLanguage(language);
+            } else {
+                location.reload();
+                return true;
+            }
+        }
+        
+        return false;
+    },
+    
+    toggleLanguage: function() {
+        handleLanguageToggle();
+    },
+    
+    formatDate: function(date, language) {
+        const lang = language || currentLanguage;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        
+        if (lang === 'en') {
+            return date.toLocaleDateString('en-US', options);
+        } else {
+            return date.toLocaleDateString('es-ES', options);
+        }
+    }
+};
+
+// Handle window load event to ensure initialization
+window.addEventListener('load', function() {
+    // Double-check toggle initialization
+    const toggleButton = document.getElementById('language-toggle-btn');
+    if (toggleButton && !toggleButton.hasAttribute('data-language-toggle-initialized')) {
+        console.warn('Language toggle not initialized in DOMContentLoaded, initializing now');
+        initLanguageToggle();
+    }
+    
+    // Create loading indicator on load to ensure it's ready
+    createLoadingIndicator();
+});

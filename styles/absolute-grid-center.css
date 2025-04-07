@@ -1,0 +1,68 @@
+/**
+ * Ultra-reliable absolute grid centering technique
+ * This approach ensures perfect horizontal and vertical centering
+ */
+
+/* Container using CSS Grid - the most reliable centering technique */
+#language-loading-indicator {
+    display: grid !important;
+    place-items: center !important; /* Perfect centering in one line */
+    position: fixed !important;
+    inset: 0 !important; /* shorthand for top/right/bottom/left: 0 */
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    z-index: 999999 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: all !important;
+}
+
+/* Inner container for spinner and text */
+.absolute-center-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 300px !important; /* Fixed width to prevent shifting */
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Spinner element */
+.grid-spinner {
+    width: 6rem !important;
+    height: 6rem !important;
+    border: 0.4rem solid rgba(255, 255, 255, 0.3) !important;
+    border-top-color: #0077cc !important;
+    border-radius: 50% !important;
+    margin: 0 auto 2rem auto !important;
+    animation: grid-spin 1s linear infinite !important;
+}
+
+/* Text element */
+.grid-text {
+    color: white !important;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+/* Keyframes for spinner rotation */
+@keyframes grid-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Special positioning for body during loading */
+body.language-loading {
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
