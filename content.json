@@ -37,15 +37,21 @@
     {
         "titulo": "Introducción",
         "puntos": [
-            "Importancia creciente de la educación virtual.",
-            "Objetivo: Explorar implicaciones, consideraciones de diseño y componentes pedagógicos del e-learning."
+            "La educación virtual ha experimentado un crecimiento exponencial en la última década, transformando el panorama educativo a nivel mundial.",
+            "Este auge se ha intensificado tras la pandemia de COVID-19, que catalizó la adopción masiva de modalidades de aprendizaje en línea.",
+            "Los entornos virtuales ofrecen oportunidades sin precedentes para democratizar el acceso a la educación, superando barreras geográficas y temporales.",
+            "Sin embargo, estos entornos también plantean desafíos significativos que requieren repensar los modelos pedagógicos tradicionales.",
+            "Objetivo: Explorar a profundidad las implicaciones, consideraciones de diseño y componentes pedagógicos esenciales para crear experiencias de e-learning efectivas y enriquecedoras."
         ],
         "icon": "fa-book-open",
         "en": {
             "titulo": "Introduction",
             "puntos": [
-                "Growing importance of virtual education.",
-                "Objective: Explore implications, design considerations, and pedagogical components of e-learning."
+                "Virtual education has experienced exponential growth in the last decade, transforming the educational landscape worldwide.",
+                "This rise has intensified following the COVID-19 pandemic, which catalyzed the massive adoption of online learning modalities.",
+                "Virtual environments offer unprecedented opportunities to democratize access to education, overcoming geographical and temporal barriers.",
+                "However, these environments also pose significant challenges that require rethinking traditional pedagogical models.",
+                "Objective: To explore in depth the implications, design considerations, and essential pedagogical components for creating effective and enriching e-learning experiences."
             ]
         }
     },
