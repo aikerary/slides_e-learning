@@ -176,15 +176,23 @@
     {
         "titulo": "Conclusiones",
         "puntos": [
-            "Recapitulación: Cambio de roles, diseño intencional, interacción, evaluación formativa.",
-            "La efectividad del e-learning depende de un diseño pedagógico sólido centrado en el estudiante."
+            "La transformación digital de la educación requiere un cambio de mentalidad y un rediseño pedagógico completo, no solo la digitalización de contenidos tradicionales.",
+            "El rol docente evoluciona hacia facilitador, diseñador de experiencias y curador de contenidos, mientras el estudiante asume mayor autonomía y responsabilidad.",
+            "El diseño efectivo de entornos virtuales de aprendizaje debe equilibrar elementos tecnológicos, pedagógicos y sociales para crear experiencias educativas significativas.",
+            "Las plataformas LMS son más que simples repositorios; son ecosistemas completos que deben seleccionarse según las necesidades específicas del contexto educativo.",
+            "La evaluación en entornos virtuales debe ser continua, diversa en formatos y enfocada tanto en procesos como en resultados de aprendizaje.",
+            "La efectividad del e-learning depende fundamentalmente de un diseño pedagógico sólido centrado en el estudiante, con componentes interrelacionados y coherentes."
         ],
         "icon": "fa-check-circle",
         "en": {
             "titulo": "Conclusions",
             "puntos": [
-                "Recap: Role changes, intentional design, interaction, formative assessment.",
-                "E-learning effectiveness depends on solid student-centered pedagogical design."
+                "The digital transformation of education requires a mindset shift and complete pedagogical redesign, not just the digitization of traditional content.",
+                "The teaching role evolves towards facilitator, experience designer, and content curator, while students assume greater autonomy and responsibility.",
+                "Effective design of virtual learning environments must balance technological, pedagogical, and social elements to create meaningful educational experiences.",
+                "LMS platforms are more than simple repositories; they are complete ecosystems that should be selected according to the specific needs of the educational context.",
+                "Assessment in virtual environments must be continuous, diverse in formats, and focused on both learning processes and outcomes.",
+                "E-learning effectiveness fundamentally depends on solid student-centered pedagogical design, with interrelated and coherent components."
             ]
         }
     },
